@@ -1,0 +1,15 @@
+libdrm_sun4i.so.0 libdrm-sun4i0 #MINVER#
+ drm_sun4i_bo_get_flags@Base 0
+ drm_sun4i_bo_get_handle@Base 0
+ drm_sun4i_bo_get_tiling@Base 0
+ drm_sun4i_bo_map@Base 0
+ drm_sun4i_bo_new@Base 0
+ drm_sun4i_bo_ref@Base 0
+ drm_sun4i_bo_set_flags@Base 0
+ drm_sun4i_bo_set_tiling@Base 0
+ drm_sun4i_bo_unmap@Base 0
+ drm_sun4i_bo_unref@Base 0
+ drm_sun4i_bo_wrap@Base 0
+ drm_sun4i_close@Base 0
+ drm_sun4i_new@Base 0
+

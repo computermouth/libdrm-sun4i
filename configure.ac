@@ -127,6 +127,11 @@ AC_ARG_ENABLE(tegra-experimental-api,
 	      [Enable support for Tegra's experimental API (default: disabled)]),
 	      [TEGRA=$enableval], [TEGRA=no])
 
+AC_ARG_ENABLE(sun4i-experimental-api,
+	      AS_HELP_STRING([--enable-sun4i-experimental-api],
+	      [Enable support for sun4i's experimental API (default: disabled)]),
+	      [SUN4I=$enableval], [SUN4I=no])
+
 AC_ARG_ENABLE(vc4,
 	      AS_HELP_STRING([--disable-vc4],
 	      [Enable support for vc4's API (default: auto, enabled on arm)]),
@@ -280,6 +285,9 @@ if test "x$drm_cv_atomic_primitives" = "xnone"; then
 	LIBDRM_ATOMICS_NOT_FOUND_MSG($TEGRA, tegra, NVIDIA Tegra, tegra-experimental-api)
 	TEGRA=no
 
+	LIBDRM_ATOMICS_NOT_FOUND_MSG($SUN4I, sun4i, ARM Mali Utgard, sun4i-experimental-api)
+	SUN4I=no
+
 	LIBDRM_ATOMICS_NOT_FOUND_MSG($ETNAVIV, etnaviv, Vivante, etnaviv-experimental-api)
 	ETNAVIV=no
 else
@@ -416,6 +424,11 @@ if test "x$TEGRA" = xyes; then
 	AC_DEFINE(HAVE_TEGRA, 1, [Have Tegra support])
 fi
 
+AM_CONDITIONAL(HAVE_SUN4I, [test "x$SUN4I" = xyes])
+if test "x$SUN4I" = xyes; then
+	AC_DEFINE(HAVE_SUN4I, 1, [Have sun4i support])
+fi
+
 AM_CONDITIONAL(HAVE_VC4, [test "x$VC4" = xyes])
 if test "x$VC4" = xyes; then
 	AC_DEFINE(HAVE_VC4, 1, [Have VC4 support])
@@ -535,6 +548,8 @@ AC_CONFIG_FILES([
 	freedreno/libdrm_freedreno.pc
 	tegra/Makefile
 	tegra/libdrm_tegra.pc
+	sun4i/Makefile
+	sun4i/libdrm_sun4i.pc
 	vc4/Makefile
 	vc4/libdrm_vc4.pc
 	etnaviv/Makefile
@@ -550,6 +565,7 @@ AC_CONFIG_FILES([
 	tests/vbltest/Makefile
 	tests/exynos/Makefile
 	tests/tegra/Makefile
+	tests/sun4i/Makefile
 	tests/nouveau/Makefile
 	tests/etnaviv/Makefile
 	tests/util/Makefile
@@ -570,6 +586,7 @@ echo "  OMAP API       $OMAP"
 echo "  EXYNOS API     $EXYNOS"
 echo "  Freedreno API  $FREEDRENO (kgsl: $FREEDRENO_KGSL)"
 echo "  Tegra API      $TEGRA"
+echo "  Sun4i API      $SUN4I"
 echo "  VC4 API        $VC4"
 echo "  Etnaviv API    $ETNAVIV"
 echo ""

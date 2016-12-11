@@ -22,6 +22,10 @@ if HAVE_TEGRA
 SUBDIRS += tegra
 endif
 
+if HAVE_SUN4I
+SUBDIRS += sun4i
+endif
+
 if HAVE_ETNAVIV
 SUBDIRS += etnaviv
 endif

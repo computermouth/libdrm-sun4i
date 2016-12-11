@@ -102,6 +102,9 @@
 /* Have Tegra support */
 #undef HAVE_TEGRA
 
+/* Have sun4i support */
+#undef HAVE_SUN4I
+
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 

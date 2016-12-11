@@ -64,6 +64,16 @@ else
 	confflags += --disable-tegra-experimental-api
 endif
 
+# sun4i is on arm and arm64
+ifneq (,$(filter arm arm64,$(DEB_HOST_ARCH_CPU)))
+	SUN4I = yes
+endif
+ifeq ($(SUN4I), yes)
+	confflags += --enable-sun4i-experimental-api
+else
+	confflags += --disable-sun4i-experimental-api
+endif
+
 # Freedreno is on arm and arm64
 ifneq (,$(filter arm arm64,$(DEB_HOST_ARCH_CPU)))
 	FREEDRENO = yes
@@ -108,6 +118,9 @@ endif
 ifeq ($(TEGRA), yes)
 	dh_strip -plibdrm-tegra0 --dbg-package=libdrm-tegra0-dbg
 endif
+ifeq ($(SUN4I), yes)
+	dh_strip -plibdrm-sun4i0 --dbg-package=libdrm-sun4i0-dbg
+endif
 ifeq ($(FREEDRENO), yes)
 	dh_strip -plibdrm-freedreno1 --dbg-package=libdrm-freedreno1-dbg
 endif
@@ -129,6 +142,9 @@ ifeq ($(ARM), yes)
 endif
 ifeq ($(TEGRA), yes)
 	dh_makeshlibs -plibdrm-tegra0 -V'libdrm-tegra0' -- -c4
+endif
+ifeq ($(SUN4I), yes)
+	dh_makeshlibs -plibdrm-sun4i0 -V'libdrm-sun4i0' -- -c4
 endif
 ifeq ($(FREEDRENO), yes)
 	dh_makeshlibs -plibdrm-freedreno1 -V'libdrm-freedreno1 (>= 2.4.73)' -- -c4

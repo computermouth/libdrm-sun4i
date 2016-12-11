@@ -36,6 +36,7 @@ AM_DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-freedreno \
 	--enable-freedreno-kgsl\
 	--enable-tegra-experimental-api \
+	--enable-sun4i-experimental-api \
 	--enable-etnaviv-experimental-api \
 	--enable-install-test-programs \
 	--enable-cairo-tests \
@@ -79,6 +80,10 @@ endif
 
 if HAVE_TEGRA
 TEGRA_SUBDIR = tegra
+endif
+
+if HAVE_SUN4I
+SUN4I_SUBDIR = sun4i
 endif
 
 if HAVE_VC4

@@ -662,6 +662,8 @@ HAVE_VC4_FALSE
 HAVE_VC4_TRUE
 HAVE_TEGRA_FALSE
 HAVE_TEGRA_TRUE
+HAVE_SUN4I_FALSE
+HAVE_SUN4I_TRUE
 HAVE_AMDGPU_FALSE
 HAVE_AMDGPU_TRUE
 HAVE_CUNIT_FALSE
@@ -853,6 +855,7 @@ enable_exynos_experimental_api
 enable_freedreno
 enable_freedreno_kgsl
 enable_tegra_experimental_api
+enable_sun4i_experimental_api
 enable_vc4
 enable_etnaviv_experimental_api
 enable_install_test_programs
@@ -1539,6 +1542,9 @@ Optional Features:
                           android kernel API (default: disabled)
   --enable-tegra-experimental-api
                           Enable support for Tegra's experimental API
+                          (default: disabled)
+  --enable-sun4i-experimental-api
+                          Enable support for sun4i's experimental API
                           (default: disabled)
   --disable-vc4           Enable support for vc4's API (default: auto, enabled
                           on arm)
@@ -13528,6 +13534,14 @@ else
 fi
 
 
+# Check whether --enable-sun4i-experimental-api was given.
+if test "${enable_sun4i_experimental_api+set}" = set; then :
+  enableval=$enable_sun4i_experimental_api; TEGRA=$enableval
+else
+  SUN4I=no
+fi
+
+
 # Check whether --enable-vc4 was given.
 if test "${enable_vc4+set}" = set; then :
   enableval=$enable_vc4; VC4=$enableval
@@ -13834,6 +13848,16 @@ $as_echo "$as_me: WARNING: Disabling tegra. It depends on atomic operations, whi
 	esac
 
 	TEGRA=no
+
+
+	case "x$SUN4I" in
+		xyes)	as_fn_error $? "libdrm_sun4i depends upon atomic operations, which were not found for your compiler/cpu. Try compiling with -march=native, or install the libatomics-op-dev package, or, failing both of those, disable support for ARM Mali Utgard GPUs by passing --disable-tegra-experimental-api to ./configure" "$LINENO" 5 ;;
+		xauto)	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Disabling sun4i. It depends on atomic operations, which were not found for your compiler/cpu. Try compiling with -march=native, or install the libatomics-op-dev package." >&5
+$as_echo "$as_me: WARNING: Disabling sun4i. It depends on atomic operations, which were not found for your compiler/cpu. Try compiling with -march=native, or install the libatomics-op-dev package." >&2;} ;;
+		*)	;;
+	esac
+
+	SUN4I=no
 
 
 	case "x$ETNAVIV" in
@@ -14274,7 +14298,7 @@ $as_echo "$as_me: WARNING: Could not find cunit library. Disabling amdgpu tests"
 	fi
 fi
 
- if test "x$TEGRA" = xyes; then
+if test "x$TEGRA" = xyes; then
   HAVE_TEGRA_TRUE=
   HAVE_TEGRA_FALSE='#'
 else
@@ -14285,6 +14309,18 @@ fi
 if test "x$TEGRA" = xyes; then
 
 $as_echo "#define HAVE_TEGRA 1" >>confdefs.h
+
+if test "x$SUN4I" = xyes; then
+  HAVE_SUN4I_TRUE=
+  HAVE_SUN4I_FALSE='#'
+else
+  HAVE_SUN4I_TRUE='#'
+  HAVE_SUN4I_FALSE=
+fi
+
+if test "x$SUN4I" = xyes; then
+
+$as_echo "#define HAVE_SUN4I 1" >>confdefs.h
 
 fi
 
@@ -14723,7 +14759,7 @@ $as_echo "#define HAVE_VISIBILITY 1" >>confdefs.h
 fi
 
 
-ac_config_files="$ac_config_files Makefile libkms/Makefile libkms/libkms.pc intel/Makefile intel/libdrm_intel.pc radeon/Makefile radeon/libdrm_radeon.pc amdgpu/Makefile amdgpu/libdrm_amdgpu.pc nouveau/Makefile nouveau/libdrm_nouveau.pc omap/Makefile omap/libdrm_omap.pc exynos/Makefile exynos/libdrm_exynos.pc freedreno/Makefile freedreno/libdrm_freedreno.pc tegra/Makefile tegra/libdrm_tegra.pc vc4/Makefile vc4/libdrm_vc4.pc etnaviv/Makefile etnaviv/libdrm_etnaviv.pc tests/Makefile tests/modeprint/Makefile tests/modetest/Makefile tests/kms/Makefile tests/kmstest/Makefile tests/proptest/Makefile tests/radeon/Makefile tests/amdgpu/Makefile tests/vbltest/Makefile tests/exynos/Makefile tests/tegra/Makefile tests/nouveau/Makefile tests/etnaviv/Makefile tests/util/Makefile man/Makefile libdrm.pc"
+ac_config_files="$ac_config_files Makefile libkms/Makefile libkms/libkms.pc intel/Makefile intel/libdrm_intel.pc radeon/Makefile radeon/libdrm_radeon.pc amdgpu/Makefile amdgpu/libdrm_amdgpu.pc nouveau/Makefile nouveau/libdrm_nouveau.pc omap/Makefile omap/libdrm_omap.pc exynos/Makefile exynos/libdrm_exynos.pc freedreno/Makefile freedreno/libdrm_freedreno.pc tegra/Makefile tegra/libdrm_tegra.pc sun4i/Makefile sun4i/libdrm_tegra.pc vc4/Makefile vc4/libdrm_vc4.pc etnaviv/Makefile etnaviv/libdrm_etnaviv.pc tests/Makefile tests/modeprint/Makefile tests/modetest/Makefile tests/kms/Makefile tests/kmstest/Makefile tests/proptest/Makefile tests/radeon/Makefile tests/amdgpu/Makefile tests/vbltest/Makefile tests/exynos/Makefile tests/tegra/Makefile tests/sun4i/Makefile tests/nouveau/Makefile tests/etnaviv/Makefile tests/util/Makefile man/Makefile libdrm.pc"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -14908,6 +14944,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${HAVE_TEGRA_TRUE}" && test -z "${HAVE_TEGRA_FALSE}"; then
   as_fn_error $? "conditional \"HAVE_TEGRA\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${HAVE_SUN4I_TRUE}" && test -z "${HAVE_SUN4I_FALSE}"; then
+  as_fn_error $? "conditional \"HAVE_SUN4I\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${HAVE_VC4_TRUE}" && test -z "${HAVE_VC4_FALSE}"; then
@@ -15835,6 +15875,8 @@ do
     "freedreno/libdrm_freedreno.pc") CONFIG_FILES="$CONFIG_FILES freedreno/libdrm_freedreno.pc" ;;
     "tegra/Makefile") CONFIG_FILES="$CONFIG_FILES tegra/Makefile" ;;
     "tegra/libdrm_tegra.pc") CONFIG_FILES="$CONFIG_FILES tegra/libdrm_tegra.pc" ;;
+    "sun4i/Makefile") CONFIG_FILES="$CONFIG_FILES sun4i/Makefile" ;;
+    "sun4i/libdrm_sun4i.pc") CONFIG_FILES="$CONFIG_FILES sun4i/libdrm_sun4i.pc" ;;
     "vc4/Makefile") CONFIG_FILES="$CONFIG_FILES vc4/Makefile" ;;
     "vc4/libdrm_vc4.pc") CONFIG_FILES="$CONFIG_FILES vc4/libdrm_vc4.pc" ;;
     "etnaviv/Makefile") CONFIG_FILES="$CONFIG_FILES etnaviv/Makefile" ;;
@@ -15850,6 +15892,7 @@ do
     "tests/vbltest/Makefile") CONFIG_FILES="$CONFIG_FILES tests/vbltest/Makefile" ;;
     "tests/exynos/Makefile") CONFIG_FILES="$CONFIG_FILES tests/exynos/Makefile" ;;
     "tests/tegra/Makefile") CONFIG_FILES="$CONFIG_FILES tests/tegra/Makefile" ;;
+    "tests/sun4i/Makefile") CONFIG_FILES="$CONFIG_FILES tests/sun4i/Makefile" ;;
     "tests/nouveau/Makefile") CONFIG_FILES="$CONFIG_FILES tests/nouveau/Makefile" ;;
     "tests/etnaviv/Makefile") CONFIG_FILES="$CONFIG_FILES tests/etnaviv/Makefile" ;;
     "tests/util/Makefile") CONFIG_FILES="$CONFIG_FILES tests/util/Makefile" ;;
@@ -17138,6 +17181,7 @@ echo "  OMAP API       $OMAP"
 echo "  EXYNOS API     $EXYNOS"
 echo "  Freedreno API  $FREEDRENO (kgsl: $FREEDRENO_KGSL)"
 echo "  Tegra API      $TEGRA"
+echo "  Sun4i API      $SUN4I"
 echo "  VC4 API        $VC4"
 echo "  Etnaviv API    $ETNAVIV"
 echo ""

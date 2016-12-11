@@ -137,6 +137,7 @@ static const char * const modules[] = {
 	"msm",
 	"sti",
 	"tegra",
+	"sun4i",
 	"imx-drm",
 	"rockchip",
 	"atmel-hlcdc",

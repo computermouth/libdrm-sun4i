@@ -230,8 +230,9 @@ am__klibdrminclude_HEADERS_DIST = include/drm/drm.h \
 	include/drm/r128_drm.h include/drm/radeon_drm.h \
 	include/drm/amdgpu_drm.h include/drm/savage_drm.h \
 	include/drm/sis_drm.h include/drm/tegra_drm.h \
-	include/drm/vc4_drm.h include/drm/via_drm.h \
-	include/drm/virtgpu_drm.h include/drm/vmwgfx_drm.h
+	include/drm/sun4i_drm.h include/drm/vc4_drm.h \
+        include/drm/via_drm.h include/drm/virtgpu_drm.h \
+        include/drm/vmwgfx_drm.h
 HEADERS = $(klibdrminclude_HEADERS) $(libdrminclude_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
@@ -263,7 +264,7 @@ ETAGS = etags
 CTAGS = ctags
 CSCOPE = cscope
 DIST_SUBDIRS = . libkms intel nouveau radeon amdgpu omap exynos \
-	freedreno tegra vc4 etnaviv tests man
+	freedreno tegra sun4i vc4 etnaviv tests man
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.sources \
 	$(srcdir)/config.h.in $(srcdir)/libdrm.pc.in \
 	$(top_srcdir)/build-aux/compile \
@@ -503,6 +504,7 @@ LIBDRM_INCLUDE_H_FILES := \
 	include/drm/savage_drm.h \
 	include/drm/sis_drm.h \
 	include/drm/tegra_drm.h \
+	include/drm/sun4i_drm.h \
 	include/drm/vc4_drm.h \
 	include/drm/via_drm.h \
 	include/drm/virtgpu_drm.h
@@ -525,6 +527,7 @@ AM_DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-freedreno \
 	--enable-freedreno-kgsl\
 	--enable-tegra-experimental-api \
+	--enable-sun4i-experimental-api \
 	--enable-etnaviv-experimental-api \
 	--enable-install-test-programs \
 	--enable-cairo-tests \
@@ -541,6 +544,7 @@ pkgconfig_DATA = libdrm.pc
 @HAVE_EXYNOS_TRUE@EXYNOS_SUBDIR = exynos
 @HAVE_FREEDRENO_TRUE@FREEDRENO_SUBDIR = freedreno
 @HAVE_TEGRA_TRUE@TEGRA_SUBDIR = tegra
+@HAVE_SUN4I_TRUE@SUN4I_SUBDIR = sun4i
 @HAVE_VC4_TRUE@VC4_SUBDIR = vc4
 @HAVE_ETNAVIV_TRUE@ETNAVIV_SUBDIR = etnaviv
 @BUILD_MANPAGES_TRUE@@HAVE_MANPAGES_STYLESHEET_TRUE@MAN_SUBDIR = man
@@ -555,6 +559,7 @@ SUBDIRS = \
 	$(EXYNOS_SUBDIR) \
 	$(FREEDRENO_SUBDIR) \
 	$(TEGRA_SUBDIR) \
+	$(SUN4I_SUBDIR) \
 	$(VC4_SUBDIR) \
 	$(ETNAVIV_SUBDIR) \
 	tests \
