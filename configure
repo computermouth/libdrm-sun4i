@@ -13536,7 +13536,7 @@ fi
 
 # Check whether --enable-sun4i-experimental-api was given.
 if test "${enable_sun4i_experimental_api+set}" = set; then :
-  enableval=$enable_sun4i_experimental_api; TEGRA=$enableval
+  enableval=$enable_sun4i_experimental_api; SUN4I=$enableval
 else
   SUN4I=no
 fi
