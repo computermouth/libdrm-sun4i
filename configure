@@ -14310,6 +14310,8 @@ if test "x$TEGRA" = xyes; then
 
 $as_echo "#define HAVE_TEGRA 1" >>confdefs.h
 
+fi
+
 if test "x$SUN4I" = xyes; then
   HAVE_SUN4I_TRUE=
   HAVE_SUN4I_FALSE='#'
