@@ -72,6 +72,7 @@ XFAIL_TESTS =					\
 
 TESTS +=					\
 	openclose				\
+	sun4i_openclose				\
 	getversion				\
 	getclient				\
 	getstats				\

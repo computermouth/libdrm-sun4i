@@ -104,6 +104,7 @@ TESTS = drmsl$(EXEEXT) hash$(EXEEXT) random$(EXEEXT) $(am__EXEEXT_1)
 
 @HAVE_LIBUDEV_TRUE@am__append_10 = \
 @HAVE_LIBUDEV_TRUE@	openclose				\
+@HAVE_LIBUDEV_TRUE@	sun4i_openclose				\
 @HAVE_LIBUDEV_TRUE@	getversion				\
 @HAVE_LIBUDEV_TRUE@	getclient				\
 @HAVE_LIBUDEV_TRUE@	getstats				\
@@ -134,6 +135,7 @@ am__v_lt_0 = --silent
 am__v_lt_1 = 
 @HAVE_LIBUDEV_TRUE@am_libdrmtest_la_rpath =
 @HAVE_LIBUDEV_TRUE@am__EXEEXT_1 = openclose$(EXEEXT) \
+@HAVE_LIBUDEV_TRUE@am__EXEEXT_1 = sun4i_openclose$(EXEEXT) \
 @HAVE_LIBUDEV_TRUE@	getversion$(EXEEXT) getclient$(EXEEXT) \
 @HAVE_LIBUDEV_TRUE@	getstats$(EXEEXT) setversion$(EXEEXT) \
 @HAVE_LIBUDEV_TRUE@	updatedraw$(EXEEXT) name_from_fd$(EXEEXT)
@@ -187,6 +189,11 @@ openclose_OBJECTS = openclose.$(OBJEXT)
 openclose_LDADD = $(LDADD)
 openclose_DEPENDENCIES = $(top_builddir)/libdrm.la \
 	$(am__DEPENDENCIES_2)
+sun4i_openclose_SOURCES = sun4i_openclose.c
+sun4i_openclose_OBJECTS = sun4i_openclose.$(OBJEXT)
+sun4i_openclose_LDADD = $(LDADD)
+sun4i_openclose_DEPENDENCIES = $(top_builddir)/libdrm.la \
+	$(am__DEPENDENCIES_2)
 random_SOURCES = random.c
 random_OBJECTS = random.$(OBJEXT)
 random_LDADD = $(LDADD)
@@ -237,10 +244,10 @@ am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(libdrmtest_la_SOURCES) dristat.c drmdevice.c drmsl.c \
 	drmstat.c getclient.c getstats.c getversion.c hash.c \
-	name_from_fd.c openclose.c random.c setversion.c updatedraw.c
+	name_from_fd.c openclose.c sun4i_openclose.c random.c setversion.c updatedraw.c
 DIST_SOURCES = $(am__libdrmtest_la_SOURCES_DIST) dristat.c drmdevice.c \
 	drmsl.c drmstat.c getclient.c getstats.c getversion.c hash.c \
-	name_from_fd.c openclose.c random.c setversion.c updatedraw.c
+	name_from_fd.c openclose.c sun4i_openclose.c random.c setversion.c updatedraw.c
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -782,6 +789,10 @@ openclose$(EXEEXT): $(openclose_OBJECTS) $(openclose_DEPENDENCIES) $(EXTRA_openc
 	@rm -f openclose$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(openclose_OBJECTS) $(openclose_LDADD) $(LIBS)
 
+sun4i_openclose$(EXEEXT): $(sun4i_openclose_OBJECTS) $(sun4i_openclose_DEPENDENCIES) $(EXTRA_sun4i_openclose_DEPENDENCIES) 
+	@rm -f sun4i_openclose$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(sun4i_openclose_OBJECTS) $(sun4i_openclose_LDADD) $(LIBS)
+
 random$(EXEEXT): $(random_OBJECTS) $(random_DEPENDENCIES) $(EXTRA_random_DEPENDENCIES) 
 	@rm -f random$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(random_OBJECTS) $(random_LDADD) $(LIBS)
@@ -811,6 +822,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hash.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/name_from_fd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/openclose.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sun4i_openclose.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/random.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/setversion.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/updatedraw.Po@am__quote@
@@ -1106,6 +1118,13 @@ random.log: random$(EXEEXT)
 openclose.log: openclose$(EXEEXT)
 	@p='openclose$(EXEEXT)'; \
 	b='openclose'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+sun4i_openclose.log: sun4i_openclose$(EXEEXT)
+	@p='sun4i_openclose$(EXEEXT)'; \
+	b='sun4i_openclose'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \

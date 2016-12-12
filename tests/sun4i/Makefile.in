@@ -88,7 +88,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = openclose$(EXEEXT)
+noinst_PROGRAMS = sun4i_openclose$(EXEEXT)
 subdir = tests/sun4i
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
@@ -103,10 +103,10 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-openclose_SOURCES = openclose.c
-openclose_OBJECTS = openclose.$(OBJEXT)
-openclose_LDADD = $(LDADD)
-openclose_DEPENDENCIES = ../../sun4i/libdrm_sun4i.la ../../libdrm.la
+sun4i_openclose_SOURCES = sun4i_openclose.c
+sun4i_openclose_OBJECTS = sun4i_openclose.$(OBJEXT)
+sun4i_openclose_LDADD = $(LDADD)
+sun4i_openclose_DEPENDENCIES = ../../sun4i/libdrm_sun4i.la ../../libdrm.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -145,8 +145,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = openclose.c
-DIST_SOURCES = openclose.c
+SOURCES = sun4i_openclose.c
+DIST_SOURCES = sun4i_openclose.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -378,9 +378,9 @@ clean-noinstPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
-openclose$(EXEEXT): $(openclose_OBJECTS) $(openclose_DEPENDENCIES) $(EXTRA_openclose_DEPENDENCIES) 
-	@rm -f openclose$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(openclose_OBJECTS) $(openclose_LDADD) $(LIBS)
+sun4i_openclose$(EXEEXT): $(sun4i_openclose_OBJECTS) $(sun4i_openclose_DEPENDENCIES) $(EXTRA_sun4i_openclose_DEPENDENCIES) 
+	@rm -f sun4i_openclose$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(sun4i_openclose_OBJECTS) $(sun4i_openclose_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -388,7 +388,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/openclose.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sun4i_openclose.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

@@ -10,4 +10,4 @@ LDADD = \
 	../../libdrm.la
 
 noinst_PROGRAMS = \
-	openclose
+	sun4i_openclose
